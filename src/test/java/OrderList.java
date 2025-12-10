@@ -1,2 +1,2 @@
-public class OrderList {
-}
+
+public class OrderList {}
