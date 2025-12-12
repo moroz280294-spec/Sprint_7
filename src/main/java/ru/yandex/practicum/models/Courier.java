@@ -30,17 +30,17 @@ public class Courier {
         return  this;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstNameCourier() {
+        return firstNameCourier;
     }
 
     public Courier withFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstNameCourier = firstName;
         return  this;
     }
 
     public String login;
     private String password;
-    private String  firstName;
+    private String firstNameCourier;
     public Integer id;
 }
