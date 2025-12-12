@@ -14,7 +14,7 @@ public class Orders {
         return track;
     }
 
-    public Orders setTrack(Integer track) {
+    public Orders withTrack(Integer track) {
         this.track = track;
         return this;
     }
@@ -23,7 +23,7 @@ public class Orders {
         return firstNameClient;
     }
 
-    public Orders setFirstNameClient(String firstNameClient) {
+    public Orders withFirstNameClient(String firstNameClient) {
         this.firstNameClient = firstNameClient;
         return this;
     }
@@ -32,7 +32,7 @@ public class Orders {
         return color;
     }
 
-    public Orders setColor(String[] color) {
+    public Orders withColor(String[] color) {
         this.color = color;
         return this;
     }
@@ -41,7 +41,7 @@ public class Orders {
         return lastName;
     }
 
-    public Orders setLastName(String lastName) {
+    public Orders withLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -50,7 +50,7 @@ public class Orders {
         return address;
     }
 
-    public Orders setAddress(String address) {
+    public Orders withAddress(String address) {
         this.address = address;
         return this;
     }
@@ -59,7 +59,7 @@ public class Orders {
         return metroStation;
     }
 
-    public Orders setMetroStation(String metroStation) {
+    public Orders withMetroStation(String metroStation) {
         this.metroStation = metroStation;
         return this;
     }
@@ -68,7 +68,7 @@ public class Orders {
         return phone;
     }
 
-    public Orders setPhone(String phone) {
+    public Orders withPhone(String phone) {
         this.phone = phone;
         return this;
     }
@@ -77,7 +77,7 @@ public class Orders {
         return rentTime;
     }
 
-    public Orders setRentTime(int rentTime) {
+    public Orders withRentTime(int rentTime) {
         this.rentTime = rentTime;
         return this;
     }
@@ -86,7 +86,7 @@ public class Orders {
         return deliveryDate;
     }
 
-    public Orders setDeliveryDate(String deliveryDate) {
+    public Orders withDeliveryDate(String deliveryDate) {
         this.deliveryDate = deliveryDate;
         return this;
     }
@@ -95,7 +95,7 @@ public class Orders {
         return comment;
     }
 
-    public Orders setComment(String comment) {
+    public Orders withComment(String comment) {
         this.comment = comment;
         return this;
     }

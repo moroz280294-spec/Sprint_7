@@ -8,38 +8,66 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import ru.yandex.practicum.models.Orders;
 import ru.yandex.practicum.steps.OrdersSteps;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import static org.hamcrest.CoreMatchers.notNullValue;
 
+
+@RunWith(Parameterized.class)
 public class CreateOrderTest extends BaseTest {
-    private Orders orders;
-    private Integer track; // ← добавь это поле
+    private final String[] colorInput;
+    private Orders order;
+    private Integer track;
     private final OrdersSteps ordersSteps = new OrdersSteps();
 
+    public CreateOrderTest(String[] colorInput) {
+        this.colorInput = colorInput;
+    }
+
+    @Parameterized.Parameters(name = "color = {0}")
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {null},
+                {new String[]{"BLACK"}},
+                {new String[]{"GREY"}},
+                {new String[]{"BLACK", "GREY"}}
+        });
+    }
 
     @Before
     public void setUp() {
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
-        orders = new Orders();
-        orders.setFirstNameClient(RandomStringUtils.randomAlphabetic(8));
-        orders.setLastName(RandomStringUtils.randomAlphabetic(10));
-        orders.setAddress("г. " + RandomStringUtils.randomAlphabetic(6) + ", ул. " + RandomStringUtils.randomAlphabetic(7) + " д. " + RandomStringUtils.randomNumeric(2));
-        orders.setMetroStation("4");
-        orders.setPhone("+7" + RandomStringUtils.randomNumeric(10));
-        orders.setRentTime(5);
-        orders.setDeliveryDate("2025-12-15");
-        orders.setComment(RandomStringUtils.randomAlphabetic(20));
-        orders.setColor(new String[]{"BLACK"});
+        order = new Orders()
+                .withFirstNameClient(RandomStringUtils.randomAlphabetic(8))
+                .withLastName(RandomStringUtils.randomAlphabetic(10))
+                .withAddress("г. Москва, ул. " + RandomStringUtils.randomAlphabetic(7))
+                .withMetroStation("4")
+                .withPhone("+7" + RandomStringUtils.randomNumeric(10))
+                .withRentTime(5)
+                .withDeliveryDate("2025-12-15")
+                .withComment(RandomStringUtils.randomAlphabetic(20));
+
+
+        if (colorInput != null) {
+            order.withColor(colorInput);
+        }
+
     }
 
-
     @Test
-    @DisplayName("Тест. Успешное создание заказа")
-    public void shouldCreateOrderTest() {
-        track = ordersSteps.createOrders(orders).extract().path("track");
-        ordersSteps.createOrders(orders)
+    @DisplayName("Создание заказа с разными вариантами цвета")
+    public void shouldCreateOrderWithColorTest() {
+        track = ordersSteps.createOrders(order)
+                .extract()
+                .path("track");
+
+        ordersSteps.createOrders(order)
                 .statusCode(201)
                 .body("track", notNullValue());
     }
