@@ -5,6 +5,7 @@ import io.restassured.response.ValidatableResponse;
 import ru.yandex.practicum.models.Courier;
 
 import static config.RestConfig.COURIER;
+import static config.RestConfig.COURIER_LOGIN;
 import static io.restassured.RestAssured.given;
 
 public class CourierSteps {
@@ -23,7 +24,7 @@ public class CourierSteps {
         return given()
                 .body(courier)
                 .when()
-                .post(COURIER + "/login")
+                .post(COURIER_LOGIN)
                 .then();
     }
 
