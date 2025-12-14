@@ -95,7 +95,15 @@ public class CourierTest extends BaseTest {
                 .statusCode(400)
                 .body("message", is("Недостаточно данных для входа"));
     }
-
+    @Test
+    @DisplayName("Тест.Логин курьера несуществующего курьера")
+    public void shouldLoginCourierWithoutCreateCourierTest() {
+        courierSteps.createCourier(courier);
+        courier.withLogin(RandomStringUtils.randomAlphabetic(12));
+        courierSteps.loginCourier(courier)
+                .statusCode(404)
+                .body("message", is("Учетная запись не найдена"));
+    }
     @After
     public void tearDown() {
         Integer id = courierSteps.loginCourier(courier).extract().path("id");

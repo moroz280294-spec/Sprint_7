@@ -30,14 +30,14 @@ public class CreateOrderTest extends BaseTest {
         this.colorInput = colorInput;
     }
 
-    @Parameterized.Parameters(name = "color = {0}")
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {null},
+    @Parameterized.Parameters
+    public static Object[][] getData(){
+        return new Object[][] {
                 {new String[]{"BLACK"}},
                 {new String[]{"GREY"}},
-                {new String[]{"BLACK", "GREY"}}
-        });
+                {new String[]{"BLACK","GREY"}},
+                {new String[]{""}},
+        };
     }
 
     @Before
