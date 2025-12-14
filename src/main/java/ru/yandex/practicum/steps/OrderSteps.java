@@ -8,7 +8,7 @@ import static io.restassured.RestAssured.given;
 
 public class OrderSteps {
     @Step("Получение списка заказов")
-    public static ValidatableResponse GetOrderList() {
+    public static ValidatableResponse getOrderList() {
         return given()
                 .when()
                 .get(ORDERS_LIST)

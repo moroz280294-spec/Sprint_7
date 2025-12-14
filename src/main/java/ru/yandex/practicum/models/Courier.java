@@ -3,10 +3,6 @@ package ru.yandex.practicum.models;
 public class Courier {
 
 
-    public Integer getId() {
-        return id;
-    }
-
     public Courier withId(Integer id) {
         this.id = id;
         return  this;

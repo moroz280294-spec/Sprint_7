@@ -16,9 +16,9 @@ public class OrderListTest extends BaseTest {
     }
     @Test
     @DisplayName("Тест. Получение списка заказов")
-    public void shouldGetOrderListTest() {
+    public void shouldReturnOrderListTest() {
 
-        OrderSteps.GetOrderList()
+        OrderSteps.getOrderList()
                 .statusCode(200)
                 .body("orders", notNullValue()) ;
     }
