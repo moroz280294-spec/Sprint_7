@@ -21,7 +21,7 @@ public class OrdersSteps {
     @Step("Отмена заказа по трек-номеру")
     public ValidatableResponse cancelOrder(Integer trackNumber) {
         return given()
-                .queryParam("track", trackNumber)  // ← передаём только число
+                .queryParam("track", trackNumber)
                 .when()
                 .put(ORDERS_CANCEL)
                 .then();

@@ -6,7 +6,7 @@ import io.restassured.response.ValidatableResponse;
 import static config.RestConfig.ORDERS_LIST;
 import static io.restassured.RestAssured.given;
 
-public class OrderSteps {
+public class OrderListSteps {
     @Step("Получение списка заказов")
     public static ValidatableResponse getOrderList() {
         return given()

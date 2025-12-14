@@ -61,7 +61,7 @@ public class CreateOrderTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Создание заказа с разными вариантами цвета")
+    @DisplayName("Тест.Создание заказа с разными вариантами цвета")
     public void shouldCreateOrderWithColorTest() {
         track = ordersSteps.createOrders(order)
                 .extract()
