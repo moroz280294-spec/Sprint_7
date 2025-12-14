@@ -14,7 +14,7 @@ import ru.yandex.practicum.steps.CourierSteps;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
-public class CourierTest extends BaseTest {
+public class CreateCourierTest extends BaseTest {
     private Courier courier;
     private final CourierSteps courierSteps = new CourierSteps();
 
@@ -67,43 +67,8 @@ public class CourierTest extends BaseTest {
                 .body("message", is("Недостаточно данных для создания учетной записи"));
     }
 
-    @Test
-    @DisplayName("Тест.Логин курьера")
-    public void shouldLoginCourierTest() {
-        courierSteps.createCourier(courier);
-        courierSteps.loginCourier(courier)
-                .statusCode(200)
-                .body("id", notNullValue());
-    }
 
-    @Test
-    @DisplayName("Тест.Логин курьера без поля логин")
-    public void shouldLoginCourierWithoutLoginTest() {
-        courierSteps.createCourier(courier);
-        courier.withLogin(null);
-        courierSteps.loginCourier(courier)
-                .statusCode(400)
-                .body("message", is("Недостаточно данных для входа"));
-    }
 
-    @Test
-    @DisplayName("Тест.Логин курьера без поля пароль")
-    public void shouldLoginCourierWithoutPasswordTest() {
-        courierSteps.createCourier(courier);
-        courier.withPassword(null);
-        courierSteps.loginCourier(courier)
-                .statusCode(400)
-                .body("message", is("Недостаточно данных для входа"));
-    }
-    @Test
-    @DisplayName("Тест.Логин курьера несуществующего курьера")
-    public void shouldLoginCourierWithoutCreateCourierTest() {
-        courierSteps.createCourier(courier);
-        courier.withLogin(RandomStringUtils.randomAlphabetic(12));
-        courierSteps.loginCourier(courier)
-                .statusCode(404)
-                .body("message", is("Учетная запись не найдена"));
-    }
     @After
     public void tearDown() {
         Integer id = courierSteps.loginCourier(courier).extract().path("id");

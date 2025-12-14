@@ -1,0 +1,81 @@
+package ru.yandex.practicum.tests;
+
+import io.qameta.allure.junit4.DisplayName;
+import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import ru.yandex.practicum.models.Courier;
+import ru.yandex.practicum.steps.CourierSteps;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+
+public class LoginCourierTest extends BaseTest {
+    private Courier courier;
+    private final CourierSteps courierSteps = new CourierSteps();
+
+    @Before
+    public void setUp() {
+        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+        courier = new Courier();
+        courier.withLogin(RandomStringUtils.randomAlphabetic(12))
+                .withPassword(RandomStringUtils.randomAlphabetic(10))
+                .withFirstName(RandomStringUtils.randomAlphabetic(11));
+    courierSteps.createCourier(courier);}
+
+    @Test
+@DisplayName("Тест.Логин курьера")
+public void shouldLoginCourierTest() {
+    courierSteps.loginCourier(courier)
+            .statusCode(200)
+            .body("id", notNullValue());
+}
+
+    @Test
+    @DisplayName("Тест.Логин курьера без поля логин")
+    public void shouldLoginCourierWithoutLoginTest() {
+        courier.withLogin(null);
+        courierSteps.loginCourier(courier)
+                .statusCode(400)
+                .body("message", is("Недостаточно данных для входа"));
+    }
+
+    @Test
+    @DisplayName("Тест.Логин курьера без поля пароль")
+    public void shouldLoginCourierWithoutPasswordTest() {
+        courier.withPassword(null);
+        courierSteps.loginCourier(courier)
+                .statusCode(400)
+                .body("message", is("Недостаточно данных для входа"));
+    }
+    @Test
+    @DisplayName("Тест.Логин  несуществующего курьера")
+    public void shouldLoginCourierWithoutCreateCourierTest() {
+        courier.withLogin(RandomStringUtils.randomAlphabetic(12));
+        courierSteps.loginCourier(courier)
+                .statusCode(404)
+                .body("message", is("Учетная запись не найдена"));
+    }
+    @Test
+    @DisplayName("Тест.Логин курьера с неправильным паролем")
+    public void shouldLoginCourierWithWrongPasswordTest() {
+        courier.withPassword(RandomStringUtils.randomAlphabetic(10));
+        courierSteps.loginCourier(courier)
+                .statusCode(404)
+                .body("message", is("Учетная запись не найдена"));
+    }
+    @After
+    public void tearDown() {
+        Integer id = courierSteps.loginCourier(courier).extract().path("id");
+        if (id != null) {
+            courierSteps.deleteCourier(new Courier().withId(id));
+        }
+    }
+
+}
+
+
